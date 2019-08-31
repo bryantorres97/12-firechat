@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../providers/chat.service';
 import { Mensaje } from '../../interfaces/mensaje.interface';
 
@@ -8,12 +8,22 @@ import { Mensaje } from '../../interfaces/mensaje.interface';
   templateUrl: './chat.component.html',
   styles: []
 })
-export class ChatComponent {
+export class ChatComponent implements OnInit{
   chats: Mensaje[] = [];
   mensaje = '';
+  elemento: any;
+
   constructor(public chatService: ChatService) {
-    this.chatService.cargarMensajes().subscribe();
+    this.chatService.cargarMensajes().subscribe(() => {
+      setTimeout(() => {
+        this.elemento.scrollTop = this.elemento.scrollHeight;
+      }, 20);
+    });
     // chats = this.chattS
+  }
+
+  ngOnInit() {
+    this.elemento = document.getElementById('app-mensajes');
   }
 
   enviarMensaje() {
