@@ -14,12 +14,11 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 /* ------------------------------- COMPONENTES ------------------------------ */
 
 import { ChatComponent } from './components/chat/chat.component';
-
+import { LoginComponent } from './components/login/login.component';
 import { FormsModule } from '@angular/forms';
 
 /* -------------------------------- SERVICIOS ------------------------------- */
 import { ChatService } from './providers/chat.service';
-import { LoginComponent } from './components/login/login.component';
 
 
 
