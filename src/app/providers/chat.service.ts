@@ -5,7 +5,7 @@ import { Mensaje } from '../interfaces/mensaje.interface';
 import { map } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
-import { timingSafeEqual } from 'crypto';
+// import { timingSafeEqual } from 'crypto';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class ChatService {
 
   private itemsCollection: AngularFirestoreCollection<Mensaje>;
 
-  constructor(private afs: AngularFirestore, public afAuth: AngularFireAuth) { 
+  constructor(private afs: AngularFirestore, public afAuth: AngularFireAuth) {
     this.afAuth.authState.subscribe(user => {
       console.log('Estado del usuario ', user );
       if (!user) {
@@ -43,10 +43,10 @@ export class ChatService {
 
   agregarMensaje(texto: string) {
     const mensaje: Mensaje = {
-      nombre: 'Demo',
+      nombre: this.usuario.nombre,
       mensaje: texto,
-      fecha: new Date().getTime()
-      // TODO generar el UID
+      fecha: new Date().getTime(),
+      uid: this.usuario.uid
     };
     return this.itemsCollection.add(mensaje);
   }
@@ -54,7 +54,11 @@ export class ChatService {
 /* ----------------------------- LOGIN Y LOGOUT ----------------------------- */
 
   login(proveedor: string) {
-    this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
+    if (proveedor === 'Google') {
+      this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
+    } else {
+      this.afAuth.auth.signInWithPopup(new auth.TwitterAuthProvider());
+    }
   }
   logout() {
     this.usuario = {};

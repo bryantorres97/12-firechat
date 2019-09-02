@@ -10,9 +10,11 @@
   <div class="col-md-12 text-right" *ngIf="chatService.usuario.uid">
     <button type="button" class="btn btn-outline-info" (click)="chatService.logout()"><i class="fas fa-sign-out-alt"></i>Salir</button>
   </div>
+
   <app-login *ngIf="!chatService.usuario.uid"></app-login>
-  <!-- <div class="chat-window">
+  
+  <div class="chat-window" *ngIf="chatService.usuario.uid">
     <app-chat></app-chat>
     
-  </div> -->
+  </div>
 </div>
